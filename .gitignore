@@ -1,2 +1,4 @@
 .env
 .env.example
+src/ragapp/__pycache__/loader.cpython-313.pyc
+.DS_Store
