@@ -21,3 +21,20 @@ def generate_answer(query:str,context_chunks:list[str])-> str:
         ]
     )
     return response.choices[0].message.content
+
+def generate_answer_stream(query: str, context_chunks: list[str]):
+    context = "\n\n---\n\n".join(context_chunks)
+    user_message = f"Context:\n{context}\n\nQuestion: {query}"
+
+    stream = client.chat.completions.create(
+        model=settings.llm_model,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_message},
+        ],
+        stream=True,   # <-- the key change
+    )
+    for chunk in stream:
+        content = chunk.choices[0].delta.content
+        if content is not None:
+            yield content
