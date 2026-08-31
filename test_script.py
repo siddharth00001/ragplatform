@@ -16,9 +16,10 @@ from src.ragapp.generator import generate_answer
 #     print(f"Chunk {i}: {chunk[:15]}...{chunk[-15:]}")
 
 ## The real implementation would involve loading a document and chunking it
-text = load_documents("./data/active-factsheet---july-2026.pdf")
+text = load_documents("./data/ABSL Factsheet_July 2026.pdf")
 chunks = chunk_text(text)
-chunk_vecs = np.array(embed_texts(chunks))
+# chunk_vecs = np.array(embed_texts(chunks))
+print(len(chunks))
 # print(type(chunks),len(chunks))
 # vectors = embed_texts(chunks[:3])
 # print(len(vectors))
@@ -32,7 +33,7 @@ chunk_vecs = np.array(embed_texts(chunks))
 
 
 # Example usage
-query = "What is the CEO's home address?"
-results  = retrieve(query,chunks,chunk_vecs,top_k =3)
-answer = generate_answer(query=query,context_chunks=results)
-print(answer)
+# query = "What is the CEO's home address?"
+# results  = retrieve(query,chunks,chunk_vecs,top_k =3)
+# answer = generate_answer(query=query,context_chunks=results)
+# print(answer)

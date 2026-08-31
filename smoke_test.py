@@ -1,12 +1,21 @@
-from src.ragapp.config import settings
-from openai import OpenAI
+from src.ragapp.loader import load_documents
+from src.ragapp.chunker import chunk_text
+from src.ragapp.vector_store import VectorStore
 
-client = OpenAI(api_key=settings.openai_api_key)
+store = VectorStore()
+
+if store.count() == 0:
+    print(f"Initial {store.count()} chunks.")
+    text_data = load_documents(path="./data/ABSL Factsheet_July 2026.pdf")
+    chunked_text= chunk_text(text=text_data)
+    store.add(chunked_text)
+    print(f"Ingested {store.count()} chunks.")
+
+else:
+    print(f"Data is already present Inside the Vector Store, Chunk Counts {store.count()}")
 
 
-response = client.chat.completions.create(
-    model=settings.llm_model,
-    messages=[{"role":"user","content":"Greet someone in one sentence"}]
-)
+results = store.search(query="What is the Expense ratio?", top_k=3)
 
-print(response.choices[0].message.content)
+for i,r in enumerate(results):
+    print(f"Index-----\n{i} and -----\n Trimmed text-----\n{r[:120]} ")
