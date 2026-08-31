@@ -1,4 +1,31 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Virtual environment ---
+.venv/
+venv/
+env/
+
+# --- Secrets & config ---
 .env
-.env.example
-src/ragapp/__pycache__/loader.cpython-313.pyc
-.DS_Store
+.env.*
+!.env.example
+
+# --- Vector store / generated data ---
+chroma_db/
+
+# --- Test & coverage artifacts ---
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+#
